@@ -8,7 +8,7 @@
 
 <a href="https://trendshift.io/repositories/14726" target="_blank"><img src="https://trendshift.io/api/badge/repositories/14726" alt="sansan0%2FTrendRadar | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
 
-<a href="https://share.302.ai/mEOUzG" target="_blank"><img src="_image/302ai.png" alt="302.AI logo" height="40"/></a>
+<a href="https://share.302.ai/mEOUzG" target="_blank"><img src="_image/302ai.png" alt="302.AI logo" height="60"/></a>
 
 [![GitHub Stars](https://img.shields.io/github/stars/sansan0/TrendRadar?style=flat-square&logo=github&color=yellow)](https://github.com/sansan0/TrendRadar/stargazers)
 [![GitHub Forks](https://img.shields.io/github/forks/sansan0/TrendRadar?style=flat-square&logo=github&color=blue)](https://github.com/sansan0/TrendRadar/network/members)
@@ -47,7 +47,7 @@
 | [🎯 Core Features](#-core-features) | [🚀 Quick Start](#-quick-start) | [🐳 Docker Deployment](#-docker-deployment) | [🤖 AI Analysis](#-ai-analysis-deployment) |
 |:---:|:---:|:---:|:---:|
 | [📝 Changelog](#-changelog) | [🔌 MCP Clients](#-mcp-clients) | [❓ FAQ & Support](#-faq--support) | [⭐ Related Projects](#-related-projects) |
-| [🔧 Custom Platforms](#custom-monitoring-platforms) | [📝 Keywords Config](#frequencywordstxt-configuration) | | |
+| [🔧 Custom Platforms](#custom-monitoring-platforms) | [📝 Keywords Config](#frequencywordstxt-configuration) | [🪄 Sponsors](#-sponsors) | |
 
 </div>
 
@@ -101,8 +101,6 @@ This project uses the API from [newsnow](https://github.com/ourongxing/newsnow) 
 
 </details>
 
-
-> This project uses the API from [newsnow](https://github.com/ourongxing/newsnow) to fetch multi-platform data
 
 ## ✨ Core Features
 
@@ -474,7 +472,11 @@ AI conversational analysis system based on MCP (Model Context Protocol), enablin
   - Cross-platform data comparison (activity stats, keyword co-occurrence)
   - Smart summary generation, similar news finding, historical correlation search
 
-> No more manual data file browsing—AI assistant helps you understand the stories behind the news in seconds
+> **💡 Usage Tip**: AI features require local news data support
+> - Project includes **November 1-15** test data for immediate experience
+> - Recommend deploying the project yourself to get more real-time data
+>
+> See [AI Analysis Deployment](#-ai-analysis-deployment) for details
 
 ### **Zero Technical Barrier Deployment**
 
@@ -812,22 +814,33 @@ frequency_words.txt file added **required word** feature, using + sign
 
 2. **Setup GitHub Secrets (Choose your needed platforms)**:
 
-   In your forked repo, go to `Settings` > `Secrets and variables` > `Actions` > `New repository secret`, then configure one or more notification platforms as needed:
+   In your forked repo, go to `Settings` > `Secrets and variables` > `Actions` > `New repository secret`
 
-   You can configure multiple platforms simultaneously, system will send notifications to all configured platforms.
+   **📌 Important Instructions (Please Read Carefully):**
 
-   Effect similar to the image below, one name corresponds to one secret. After saving, you won't see the secret value when re-editing, which is normal.
+   - ✅ **One Name for One Secret**: For each configuration item, click the "New repository secret" button once and fill in a pair of "Name" and "Secret"
+   - ✅ **Cannot See Value After Saving is Normal**: For security reasons, after saving, you can only see the Name when re-editing, but not the Secret value
+   - ⚠️ **DO NOT Create Custom Names**: The Secret Name must **strictly use** the names listed below (e.g., `WEWORK_WEBHOOK_URL`, `FEISHU_WEBHOOK_URL`, etc.). Do not modify or create new names arbitrarily, or the system will not recognize them
+   - 💡 **Can Configure Multiple Platforms**: The system will send notifications to all configured platforms
 
-   <img src="_image/secrets.png" alt="GitHub Secrets"/>
+   **Configuration Example:**
+
+   <img src="_image/secrets.png" alt="GitHub Secrets Configuration Example"/>
+
+   As shown above, each row is a configuration item:
+   - **Name**: Must use the fixed names listed in the expanded sections below (e.g., `WEWORK_WEBHOOK_URL`)
+   - **Secret (Value)**: Fill in the actual content obtained from the corresponding platform (e.g., Webhook URL, Token, etc.)
+
+   <br>
 
 
    <details>
    <summary> <strong>👉 Click to expand: WeWork Bot</strong> (Simplest and fastest configuration)</summary>
    <br>
 
-   **GitHub Secret Configuration:**
-   - Name: `WEWORK_WEBHOOK_URL`
-   - Value: Your WeWork bot Webhook address
+   **GitHub Secret Configuration (⚠️ Name must match exactly):**
+   - **Name**: `WEWORK_WEBHOOK_URL` (Please copy and paste this name, do not type manually to avoid typos)
+   - **Secret (Value)**: Your WeWork bot Webhook address
 
    <br>
 
@@ -846,9 +859,9 @@ frequency_words.txt file added **required word** feature, using + sign
    <summary> <strong>👉 Click to expand: Feishu Bot</strong> (Most user-friendly message display)</summary>
    <br>
 
-   **GitHub Secret Configuration:**
-   - Name: `FEISHU_WEBHOOK_URL`
-   - Value: Your Feishu bot Webhook address (link starts with https://www.feishu.cn/flow/api/trigger-webhook/********)
+   **GitHub Secret Configuration (⚠️ Name must match exactly):**
+   - **Name**: `FEISHU_WEBHOOK_URL` (Please copy and paste this name, do not type manually)
+   - **Secret (Value)**: Your Feishu bot Webhook address (link starts with https://www.feishu.cn/flow/api/trigger-webhook/********)
    <br>
 
    Two methods available, **Method 1** is simpler, **Method 2** is more complex (but stable push)
@@ -893,7 +906,41 @@ frequency_words.txt file added **required word** feature, using + sign
 
    <br>
 
-   **Method 2:** (See Chinese version for detailed steps)
+   **Method 2:**
+
+   1. Open in PC browser https://botbuilder.feishu.cn/home/my-app
+
+   2. Click "New Bot Application"
+
+   3. After entering the created application, click "Process Design" > "Create Process" > "Select Trigger"
+
+   4. Scroll down, click "Webhook Trigger"
+
+   5. Now you'll see "Webhook Address", copy this link to local notepad temporarily, continue with next steps
+
+   6. In "Parameters" put the following content, then click "Done"
+
+   ```json
+   {
+     "message_type": "text",
+     "content": {
+       "total_titles": "{{Content}}",
+       "timestamp": "{{Content}}",
+       "report_type": "{{Content}}",
+       "text": "{{Content}}"
+     }
+   }
+   ```
+
+   7. Click "Select Action" > "Send Feishu Message", check "Group Message", then click the input box below, click "Groups I Manage" (if no group, you can create one in Feishu app)
+
+   8. Message title fill "TrendRadar Trending Monitor"
+
+   9. Most critical part, click + button, select "Webhook Trigger", then arrange as shown in image
+
+   ![Feishu Bot Config Example](_image/image.png)
+
+   10. After configuration, put Webhook address from step 5 into GitHub Secrets `FEISHU_WEBHOOK_URL`
 
    </details>
 
@@ -901,9 +948,9 @@ frequency_words.txt file added **required word** feature, using + sign
    <summary> <strong>👉 Click to expand: DingTalk Bot</strong></summary>
    <br>
 
-   **GitHub Secret Configuration:**
-   - Name: `DINGTALK_WEBHOOK_URL`
-   - Value: Your DingTalk bot Webhook address
+   **GitHub Secret Configuration (⚠️ Name must match exactly):**
+   - **Name**: `DINGTALK_WEBHOOK_URL` (Please copy and paste this name, do not type manually)
+   - **Secret (Value)**: Your DingTalk bot Webhook address
 
    <br>
 
@@ -931,9 +978,14 @@ frequency_words.txt file added **required word** feature, using + sign
    <summary> <strong>👉 Click to expand: Telegram Bot</strong></summary>
    <br>
 
-   **GitHub Secret Configuration:**
-   - Name: `TELEGRAM_BOT_TOKEN` - Your Telegram Bot Token
-   - Name: `TELEGRAM_CHAT_ID` - Your Telegram Chat ID
+   **GitHub Secret Configuration (⚠️ Name must match exactly):**
+   - **Name**: `TELEGRAM_BOT_TOKEN` (Please copy and paste this name, do not type manually)
+   - **Secret (Value)**: Your Telegram Bot Token
+
+   - **Name**: `TELEGRAM_CHAT_ID` (Please copy and paste this name, do not type manually)
+   - **Secret (Value)**: Your Telegram Chat ID
+
+   **Note**: Telegram requires **two** Secrets, please click "New repository secret" button twice to add them separately
 
    <br>
 
@@ -970,12 +1022,23 @@ frequency_words.txt file added **required word** feature, using + sign
 
    <br>
 
-   **GitHub Secret Configuration:**
-   - Name: `EMAIL_FROM` - Sender email address
-   - Name: `EMAIL_PASSWORD` - Email password or authorization code
-   - Name: `EMAIL_TO` - Recipient email address (multiple separated by comma) or can be same as EMAIL_FROM, send to yourself
-   - Name: `EMAIL_SMTP_SERVER` - SMTP server address (optional, auto-detect if empty)
-   - Name: `EMAIL_SMTP_PORT` - SMTP port (optional, auto-detect if empty)
+   **GitHub Secret Configuration (⚠️ Name must match exactly):**
+   - **Name**: `EMAIL_FROM` (Please copy and paste this name, do not type manually)
+   - **Secret (Value)**: Sender email address
+
+   - **Name**: `EMAIL_PASSWORD` (Please copy and paste this name, do not type manually)
+   - **Secret (Value)**: Email password or authorization code
+
+   - **Name**: `EMAIL_TO` (Please copy and paste this name, do not type manually)
+   - **Secret (Value)**: Recipient email address (multiple separated by comma, or can be same as EMAIL_FROM to send to yourself)
+
+   - **Name**: `EMAIL_SMTP_SERVER` (Optional, please copy and paste this name)
+   - **Secret (Value)**: SMTP server address (leave empty for auto-detection)
+
+   - **Name**: `EMAIL_SMTP_PORT` (Optional, please copy and paste this name)
+   - **Secret (Value)**: SMTP port (leave empty for auto-detection)
+
+   **Note**: Email push requires at least **3 required** Secrets (EMAIL_FROM, EMAIL_PASSWORD, EMAIL_TO), the last two are optional
 
    <br>
 
@@ -1057,10 +1120,17 @@ frequency_words.txt file added **required word** feature, using + sign
       ❌ Bad example: news, alerts (too easy to guess)
       ```
 
-   3. **Configure GitHub Secret**:
-      - `NTFY_TOPIC`: Fill in your subscribed topic name
-      - `NTFY_SERVER_URL`: Leave empty (default uses ntfy.sh)
-      - `NTFY_TOKEN`: Leave empty
+   3. **Configure GitHub Secret (⚠️ Name must match exactly)**:
+      - **Name**: `NTFY_TOPIC` (Please copy and paste this name, do not type manually)
+      - **Secret (Value)**: Fill in your subscribed topic name
+
+      - **Name**: `NTFY_SERVER_URL` (Optional, please copy and paste this name)
+      - **Secret (Value)**: Leave empty (default uses ntfy.sh)
+
+      - **Name**: `NTFY_TOKEN` (Optional, please copy and paste this name)
+      - **Secret (Value)**: Leave empty
+
+      **Note**: ntfy requires at least 1 required Secret (NTFY_TOPIC), the last two are optional
 
    4. **Test**:
       ```bash
@@ -1365,7 +1435,31 @@ docker exec -it trend-radar ls -la /app/config/
 
 ## 🤖 AI Analysis Deployment
 
-TrendRadar v3.0.0 added **MCP (Model Context Protocol)** based AI analysis feature, allowing natural language conversations with news data for deep analysis. Best prerequisite for using **AI features** is running this project for at least one day (accumulate news data).
+TrendRadar v3.0.0 added **MCP (Model Context Protocol)** based AI analysis feature, allowing natural language conversations with news data for deep analysis.
+
+
+### ⚠️ Important Notice Before Use
+
+
+**Critical: AI features require local news data support**
+
+AI analysis **does not** query real-time online data directly, but analyzes **locally accumulated news data** (stored in the `output` folder)
+
+
+#### Usage Instructions:
+
+1. **Built-in Test Data**: The `output` directory includes news data from **November 1-15, 2025** by default for quick feature testing
+
+2. **Query Limitations**:
+   - ✅ Only query data within available date range (Nov 1-15)
+   - ❌ Cannot query real-time news or future dates
+
+3. **Getting Latest Data**:
+   - Test data is for quick experience only, **recommend deploying the project yourself** to get real-time data
+   - Follow [Quick Start](#-quick-start) to deploy and run the project
+   - After accumulating news data for at least 1 day, you can query the latest trending topics
+
+---
 
 ### 1. Quick Deployment
 
@@ -1494,7 +1588,189 @@ Create `.cursor/mcp.json`:
 
 </details>
 
-(Additional client configs including VSCode/Cline/Continue, Claude Code CLI, MCP Inspector, and others available in Chinese version)
+<details>
+<summary><b>👉 Click to expand: VSCode (Cline/Continue)</b></summary>
+
+#### Cline Configuration
+
+Add in Cline's MCP settings:
+
+**HTTP Mode**:
+```json
+{
+  "trendradar": {
+    "url": "http://localhost:3333/mcp",
+    "type": "streamableHttp",
+    "autoApprove": [],
+    "disabled": false
+  }
+}
+```
+
+**STDIO Mode** (Recommended):
+```json
+{
+  "trendradar": {
+    "command": "uv",
+    "args": [
+      "--directory",
+      "/path/to/TrendRadar",
+      "run",
+      "python",
+      "-m",
+      "mcp_server.server"
+    ],
+    "type": "stdio",
+    "disabled": false
+  }
+}
+```
+
+#### Continue Configuration
+
+Edit `~/.continue/config.json`:
+```json
+{
+  "experimental": {
+    "modelContextProtocolServers": [
+      {
+        "transport": {
+          "type": "stdio",
+          "command": "uv",
+          "args": [
+            "--directory",
+            "/path/to/TrendRadar",
+            "run",
+            "python",
+            "-m",
+            "mcp_server.server"
+          ]
+        }
+      }
+    ]
+  }
+}
+```
+
+**Usage Examples**:
+```
+Analyze recent 7 days "Tesla" popularity trend
+Generate today's trending summary report
+Search "Bitcoin" related news and analyze sentiment
+```
+
+</details>
+
+<details>
+<summary><b>👉 Click to expand: Claude Code CLI</b></summary>
+
+#### HTTP Mode Configuration
+
+```bash
+# 1. Start HTTP service
+# Windows: start-http.bat
+# Mac/Linux: ./start-http.sh
+
+# 2. Add MCP server
+claude mcp add --transport http trendradar http://localhost:3333/mcp
+
+# 3. Verify connection (ensure service started)
+claude mcp list
+```
+
+#### Usage Examples
+
+```bash
+# Query news
+claude "Search today's Zhihu trending news, top 10"
+
+# Trend analysis
+claude "Analyze 'artificial intelligence' topic popularity trend for the past week"
+
+# Data comparison
+claude "Compare Zhihu and Weibo platform attention on 'Bitcoin'"
+```
+
+</details>
+
+<details>
+<summary><b>👉 Click to expand: MCP Inspector</b> (Debug Tool)</summary>
+<br>
+
+MCP Inspector is the official debug tool for testing MCP connections:
+
+#### Usage Steps
+
+1. **Start TrendRadar HTTP Service**:
+   ```bash
+   # Windows
+   start-http.bat
+
+   # Mac/Linux
+   ./start-http.sh
+   ```
+
+2. **Start MCP Inspector**:
+   ```bash
+   npx @modelcontextprotocol/inspector
+   ```
+
+3. **Connect in Browser**:
+   - Visit: `http://localhost:3333/mcp`
+   - Test "Ping Server" function to verify connection
+   - Check "List Tools" returns 13 tools:
+     - Basic Query: get_latest_news, get_news_by_date, get_trending_topics
+     - Smart Search: search_news, search_related_news_history
+     - Advanced Analysis: analyze_topic_trend, analyze_data_insights, analyze_sentiment, find_similar_news, generate_summary_report
+     - System Management: get_current_config, get_system_status, trigger_crawl
+
+</details>
+
+<details>
+<summary><b>👉 Click to expand: Other MCP-Compatible Clients</b></summary>
+<br>
+
+Any client supporting Model Context Protocol can connect to TrendRadar:
+
+#### HTTP Mode
+
+**Service Address**: `http://localhost:3333/mcp`
+
+**Basic Config Template**:
+```json
+{
+  "name": "trendradar",
+  "url": "http://localhost:3333/mcp",
+  "type": "http",
+  "description": "News Trending Aggregation Analysis"
+}
+```
+
+#### STDIO Mode (Recommended)
+
+**Basic Config Template**:
+```json
+{
+  "name": "trendradar",
+  "command": "uv",
+  "args": [
+    "--directory",
+    "/path/to/TrendRadar",
+    "run",
+    "python",
+    "-m",
+    "mcp_server.server"
+  ],
+  "type": "stdio"
+}
+```
+
+**Notes**:
+- Replace `/path/to/TrendRadar` with actual project path
+- Windows paths use backslash escape: `C:\\Users\\...`
+- Ensure project dependencies installed (ran setup script)
+
+</details>
 
 
 ## ☕ FAQ & Support
@@ -1507,28 +1783,13 @@ Create `.cursor/mcp.json`:
 <summary><b>👉 Click to expand: Author's Note</b></summary>
 <br>
 
-Thanks for all support! Due to sponsor support, the **one-yuan donation** QR code has been removed.
+Thanks for all support! Due to 302.AI sponsorship, my personal **one-yuan donation** QR code has been removed.
 
 Previous **one-yuan supporters** are listed in the **Acknowledgments** section at the top.
 
 This project's development and maintenance require significant time, effort, and costs (including AI model fees). With sponsorship support, I can maintain it more confidently.
 
-Currently, major AI model prices are relatively affordable. If you don't have a suitable model yet, clicking **302.AI** below also supports the developer:
-
-<div align="center">
-
-<span style="margin-left: 10px"><a href="https://share.302.ai/mEOUzG" target="_blank"><img src="_image/icon-302ai.png" alt="302ai logo" width="100"/></a></span>
-
-</div>
-
-**Usage Process:**
-
-1. After registration and top-up, enter [Management Dashboard](https://302.ai/dashboard/overview) at top right
-2. Click [API Keys](https://302.ai/apis/list) on the left
-3. Find default API KEY at page bottom, click eye icon to view, then copy (Note: don't click the copy button on the far right)
-4. Cherry Studio has integrated 302.AI, just fill in API key to use (currently must fill key first to see complete model list)
-
-If you already have a suitable model, welcome to **register and try**~
+Currently, major AI model prices are relatively affordable. Welcome to register and try, you can **[click here to claim $1 free credit](#-sponsors)**.
 
 </details>
 
@@ -1546,15 +1807,57 @@ If you already have a suitable model, welcome to **register and try**~
 
 ## 🪄 Sponsors
 
-> 302.AI is a pay-as-you-go enterprise-level AI resource platform
-> Providing the latest and most comprehensive **AI models** and **APIs** on the market, plus various ready-to-use online AI applications.
+> **302.AI** is a pay-as-you-go enterprise-level AI resource platform
+> Providing the latest and most comprehensive **AI models** and **APIs** on the market, plus various ready-to-use online AI applications
 
 
 <div align="center">
 
-<span style="margin-left: 10px"><a href="https://share.302.ai/mEOUzG" target="_blank"><img src="_image/banner-302ai-en.jpg" alt="302ai banner" width="800"/></a>
-
+<a href="https://share.302.ai/mEOUzG" target="_blank">
+  <img src="_image/banner-302ai-en.jpg" alt="302.AI" width="800"/>
+</a>
 </div>
+
+### 💰 302.AI New User Benefits
+
+> The $1 credit can be used to call various AI models (such as Claude, GPT, etc.)
+> This project's AI analysis features require AI model integration. See [AI Analysis Deployment](#-ai-analysis-deployment) for configuration tutorial
+
+[![Register & Claim](https://img.shields.io/badge/Register_302.AI-Claim_$1_Free_Credit-FF6B6B?style=for-the-badge&logo=openai&logoColor=white)](https://share.302.ai/mEOUzG)
+
+<details id="sponsor-tutorial">
+<summary><b>👉 Click to expand: 302.AI Usage Tutorial</b></summary>
+
+
+### Step 1: Get API Key
+
+1. After registration, go to [Management Dashboard](https://302.ai/dashboard/overview) at top right
+2. Click [API Keys](https://302.ai/apis/list) on the left
+3. Find default API KEY at page bottom, **click eye icon to view**, then copy
+   (⚠️ Note: Don't click the copy button on the far right)
+
+
+### Step 2: Configure in Cherry Studio
+
+1. Open Cherry Studio, go to settings
+2. Select **"302.AI"** as model provider
+3. Paste the API Key you just copied
+4. Click **Manage**, now you can use all supported AI models
+
+**Tip:** Cherry Studio has natively integrated 302.AI, you can see the complete model list after configuration.
+
+
+**Q: How long does $1 free credit last?**
+A: Depends on usage frequency and model selection, can run multiple test sessions.
+
+**Q: What after free credit runs out?**
+A: You can top up as needed, pay-as-you-go. Major AI model prices are now relatively affordable.
+
+</details>
+
+<br>
+
+---
 
 
 ### Common Questions

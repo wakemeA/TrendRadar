@@ -8,7 +8,7 @@
 
 <a href="https://trendshift.io/repositories/14726" target="_blank"><img src="https://trendshift.io/api/badge/repositories/14726" alt="sansan0%2FTrendRadar | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
 
-<a href="https://share.302.ai/mEOUzG" target="_blank"><img src="_image/302ai.png" alt="302.AI logo" height="40"/></a>
+<a href="https://share.302.ai/mEOUzG" target="_blank"><img src="_image/302ai.png" alt="302.AI logo" height="60"/></a>
 
 [![GitHub Stars](https://img.shields.io/github/stars/sansan0/TrendRadar?style=flat-square&logo=github&color=yellow)](https://github.com/sansan0/TrendRadar/stargazers)
 [![GitHub Forks](https://img.shields.io/github/forks/sansan0/TrendRadar?style=flat-square&logo=github&color=blue)](https://github.com/sansan0/TrendRadar/network/members)
@@ -46,7 +46,7 @@
 | [🎯 核心功能](#-核心功能) | [🚀 快速开始](#-快速开始) | [🐳 Docker部署](#-docker-部署) | [🤖 AI分析专区](#-ai-智能分析部署) |
 |:---:|:---:|:---:|:---:|
 | [📝 更新日志](#-更新日志) | [🔌 MCP客户端](#-mcp-客户端) | [❓ 答疑与公益](#问题答疑与公益捐助) | [⭐ 项目相关](#项目相关) |
-| [🔧 自定义监控平台](#自定义监控平台) | [📝 frequency_words.txt 配置](#frequencywordstxt-配置教程) | | |
+| [🔧 自定义监控平台](#自定义监控平台) | [📝 推送关键词配置](#frequencywordstxt-配置教程) | [🪄 赞助商](#-赞助商) | |
 
 </div>
 
@@ -517,7 +517,11 @@ weight:
   - 跨平台数据对比（活跃度统计、关键词共现）
   - 智能摘要生成、相似新闻查找、历史关联检索
 
-> 告别手动翻阅数据文件，AI 助手帮你秒懂新闻背后的故事
+> **💡 使用提示**：AI 功能需要本地新闻数据支持
+> - 项目自带 **11月1-15日** 测试数据，可立即体验
+> - 建议自行部署运行项目，获取更实时的数据
+>
+> 详见 [AI 智能分析部署](#-ai-智能分析部署)
 
 ### **零技术门槛部署**
 
@@ -847,22 +851,33 @@ frequency_words.txt 文件增加了一个【必须词】功能，使用 + 号
 
 2. **设置 GitHub Secrets（选择你需要的平台）**:
 
-   在你 Fork 后的仓库中，进入 `Settings` > `Secrets and variables` > `Actions` > `New repository secret`，然后根据需要配置以下任一或多个通知平台：
+   在你 Fork 后的仓库中，进入 `Settings` > `Secrets and variables` > `Actions` > `New repository secret`
 
-   可以同时配置多个平台，系统会向所有配置的平台发送通知。
+   **📌 重要说明（请务必仔细阅读）：**
 
-   效果类似下图，一个 name 对应一个 secret，保存完就行，你重新编辑看不到 secret 是正常情况。 
+   - ✅ **一个 Name 对应一个 Secret**：每添加一个配置项，点击一次"New repository secret"按钮，填写一对"Name"和"Secret"
+   - ✅ **保存后看不到值是正常的**：出于安全考虑，保存后重新编辑时，只能看到 Name（名称），看不到 Secret（值）的内容
+   - ⚠️ **严禁自创名称**：Secret 的 Name（名称）必须**严格使用**下方列出的名称（如 `WEWORK_WEBHOOK_URL`、`FEISHU_WEBHOOK_URL` 等），不能自己随意修改或创造新名称，否则系统无法识别
+   - 💡 **可以同时配置多个平台**：系统会向所有配置的平台发送通知
 
-   <img src="_image/secrets.png" alt="GitHub Secrets"/>
+   **配置示例：**
+
+   <img src="_image/secrets.png" alt="GitHub Secrets 配置示例"/>
+
+   如上图所示，每一行是一个配置项：
+   - **Name（名称）**：必须使用下方展开内容中列出的固定名称（如 `WEWORK_WEBHOOK_URL`）
+   - **Secret（值）**：填写你从对应平台获取的实际内容（如 Webhook 地址、Token 等）
+
+   <br>
 
 
    <details>
    <summary> <strong>👉 点击展开：企业微信机器人</strong>（配置最简单最迅速）</summary>
    <br>
 
-   **GitHub Secret 配置：**
-   - 名称：`WEWORK_WEBHOOK_URL`
-   - 值：你的企业微信机器人 Webhook 地址
+   **GitHub Secret 配置（⚠️ Name 名称必须严格一致）：**
+   - **Name（名称）**：`WEWORK_WEBHOOK_URL`（请复制粘贴此名称，不要手打，避免打错）
+   - **Secret（值）**：你的企业微信机器人 Webhook 地址
 
    <br>
 
@@ -881,9 +896,9 @@ frequency_words.txt 文件增加了一个【必须词】功能，使用 + 号
    <summary> <strong>👉 点击展开：飞书机器人</strong>（消息显示最友好）</summary>
    <br>
 
-   **GitHub Secret 配置：**
-   - 名称：`FEISHU_WEBHOOK_URL`
-   - 值：你的飞书机器人 Webhook 地址(该链接开头类似 https://www.feishu.cn/flow/api/trigger-webhook/********)
+   **GitHub Secret 配置（⚠️ Name 名称必须严格一致）：**
+   - **Name（名称）**：`FEISHU_WEBHOOK_URL`（请复制粘贴此名称，不要手打）
+   - **Secret（值）**：你的飞书机器人 Webhook 地址（该链接开头类似 https://www.feishu.cn/flow/api/trigger-webhook/********）
    <br>
 
    有两个方案，**方案一**配置简单，**方案二**配置复杂(但是稳定推送)
@@ -970,9 +985,9 @@ frequency_words.txt 文件增加了一个【必须词】功能，使用 + 号
    <summary> <strong>👉 点击展开：钉钉机器人</strong></summary>
    <br>
 
-   **GitHub Secret 配置：**
-   - 名称：`DINGTALK_WEBHOOK_URL`
-   - 值：你的钉钉机器人 Webhook 地址
+   **GitHub Secret 配置（⚠️ Name 名称必须严格一致）：**
+   - **Name（名称）**：`DINGTALK_WEBHOOK_URL`（请复制粘贴此名称，不要手打）
+   - **Secret（值）**：你的钉钉机器人 Webhook 地址
 
    <br>
 
@@ -1000,9 +1015,14 @@ frequency_words.txt 文件增加了一个【必须词】功能，使用 + 号
    <summary> <strong>👉 点击展开：Telegram Bot</strong></summary>
    <br>
 
-   **GitHub Secret 配置：**
-   - 名称：`TELEGRAM_BOT_TOKEN` - 你的 Telegram Bot Token
-   - 名称：`TELEGRAM_CHAT_ID` - 你的 Telegram Chat ID
+   **GitHub Secret 配置（⚠️ Name 名称必须严格一致）：**
+   - **Name（名称）**：`TELEGRAM_BOT_TOKEN`（请复制粘贴此名称，不要手打）
+   - **Secret（值）**：你的 Telegram Bot Token
+
+   - **Name（名称）**：`TELEGRAM_CHAT_ID`（请复制粘贴此名称，不要手打）
+   - **Secret（值）**：你的 Telegram Chat ID
+
+   **说明**：Telegram 需要配置**两个** Secret，请分别点击两次"New repository secret"按钮添加
 
    <br>
 
@@ -1039,12 +1059,23 @@ frequency_words.txt 文件增加了一个【必须词】功能，使用 + 号
 
    <br>
 
-   **GitHub Secret 配置：**
-   - 名称：`EMAIL_FROM` - 发件人邮箱地址
-   - 名称：`EMAIL_PASSWORD` - 邮箱密码或授权码
-   - 名称：`EMAIL_TO` - 收件人邮箱地址（多个收件人用英文逗号分隔）也可以和 EMAIL_FROM 一样，自己发送给自己
-   - 名称：`EMAIL_SMTP_SERVER` - SMTP服务器地址（可选，留空则自动识别）
-   - 名称：`EMAIL_SMTP_PORT` - SMTP端口（可选，留空则自动识别）
+   **GitHub Secret 配置（⚠️ Name 名称必须严格一致）：**
+   - **Name（名称）**：`EMAIL_FROM`（请复制粘贴此名称，不要手打）
+   - **Secret（值）**：发件人邮箱地址
+
+   - **Name（名称）**：`EMAIL_PASSWORD`（请复制粘贴此名称，不要手打）
+   - **Secret（值）**：邮箱密码或授权码
+
+   - **Name（名称）**：`EMAIL_TO`（请复制粘贴此名称，不要手打）
+   - **Secret（值）**：收件人邮箱地址（多个收件人用英文逗号分隔，也可以和 EMAIL_FROM 一样，自己发送给自己）
+
+   - **Name（名称）**：`EMAIL_SMTP_SERVER`（可选配置，请复制粘贴此名称）
+   - **Secret（值）**：SMTP服务器地址（可留空，系统会自动识别）
+
+   - **Name（名称）**：`EMAIL_SMTP_PORT`（可选配置，请复制粘贴此名称）
+   - **Secret（值）**：SMTP端口（可留空，系统会自动识别）
+
+   **说明**：邮件推送需要配置至少**3个必需** Secret（EMAIL_FROM、EMAIL_PASSWORD、EMAIL_TO），后两个为可选配置
 
    <br>
 
@@ -1130,10 +1161,17 @@ frequency_words.txt 文件增加了一个【必须词】功能，使用 + 号
       ❌ 坏例子：news、alerts（太容易被猜到）
       ```
 
-   3. **配置 GitHub Secret**：
-      - `NTFY_TOPIC`：填写你刚才订阅的主题名称
-      - `NTFY_SERVER_URL`：留空（默认使用 ntfy.sh）
-      - `NTFY_TOKEN`：留空
+   3. **配置 GitHub Secret（⚠️ Name 名称必须严格一致）**：
+      - **Name（名称）**：`NTFY_TOPIC`（请复制粘贴此名称，不要手打）
+      - **Secret（值）**：填写你刚才订阅的主题名称
+
+      - **Name（名称）**：`NTFY_SERVER_URL`（可选配置，请复制粘贴此名称）
+      - **Secret（值）**：留空（默认使用 ntfy.sh）
+
+      - **Name（名称）**：`NTFY_TOKEN`（可选配置，请复制粘贴此名称）
+      - **Secret（值）**：留空
+
+      **说明**：ntfy 至少需要配置 1 个必需 Secret (NTFY_TOPIC)，后两个为可选配置
 
    4. **测试**：
       ```bash
@@ -1438,7 +1476,31 @@ docker exec -it trend-radar ls -la /app/config/
 
 ## 🤖 AI 智能分析部署
 
-TrendRadar v3.0.0 新增了基于 **MCP (Model Context Protocol)** 的 AI 分析功能，让你可以通过自然语言与新闻数据对话，进行深度分析。使用 **AI 功能** 的最佳前提是已使用本项目至少运行一天(积累新闻数据)
+TrendRadar v3.0.0 新增了基于 **MCP (Model Context Protocol)** 的 AI 分析功能，让你可以通过自然语言与新闻数据对话，进行深度分析。
+
+
+### ⚠️ 使用前必读
+
+
+**重要提示：AI 功能需要本地新闻数据支持**
+
+AI 分析功能**不是**直接查询网络实时数据，而是分析你**本地已积累的新闻数据**（存储在 `output` 文件夹中）
+
+
+#### 使用说明：
+
+1. **项目自带测试数据**：`output` 目录默认包含 **2025年11月1日～11月15日** 的新闻数据，可用于快速体验 AI 功能
+
+2. **查询限制**：
+   - ✅ 只能查询已有日期范围内的数据（11月1-15日）
+   - ❌ 无法查询实时新闻或未来日期
+
+3. **获取最新数据**：
+   - 测试数据仅供快速体验，**建议自行部署项目**获取实时数据
+   - 按照 [快速开始](#-快速开始) 部署运行项目
+   - 等待至少 1 天积累新闻数据后，即可查询最新热点
+
+---
 
 ### 1. 快速部署
 
@@ -1756,35 +1818,17 @@ MCP Inspector 是官方调试工具，用于测试 MCP 连接：
 
 > 如果你想支持本项目，可通过微信搜索**腾讯公益**，对里面的**助学计划**随心捐助~
 >  
-> 我还在为信息过载而焦虑，他们却在信息荒漠中挣扎，连学习的机会都没有，所以他们比我更需要支持。 
+> 我还在为信息过载而焦虑，而他们却在信息荒漠中挣扎，他们比我更需要支持。 
 
 <details>
 <summary><b>👉 点击展开：作者有话说</b></summary>
 <br>
 
-感谢各位支持！因获得赞助商赞助，现已移除**一元点赞**打赏码。
+感谢各位支持！因获得赞助商的赞助，现已移除我个人的**一元点赞**打赏码。
 
 之前参与**一元点赞**的朋友已收录至顶部**致谢名单**。
 
 本项目开发和维护投入了大量时间、精力和成本（含 AI 模型费用），有了赞助支持后可以更安心维护。
-
-目前大厂模型价格已相对亲民，如果你手上暂无合适的模型，点击下方**302.AI**也是对开发者的支持：
-
-<div align="center">
-
-<span style="margin-left: 10px"><a href="https://share.302.ai/mEOUzG" target="_blank"><img src="_image/icon-302ai.png" alt="302.AI logo" width="100"/></a></span>
-
-</div>
-
-**使用流程：**
-
-1. 注册并充值后，进入右上角 [管理后台](https://302.ai/dashboard/overview)
-2. 点击左侧 [API Keys](https://302.ai/apis/list)
-3. 在页面下方找到默认 API KEY，点击眼睛图标查看，然后复制（注意：不是点最右侧的复制按钮）
-4. Cherry Studio 已集成 302.AI，直接填入 API 密钥即可使用(当前必须得先填密钥才能看到完整模型列表)
-
-若你已有合适的模型，也欢迎先**注册体验**~
-
 </details>
 
 - **GitHub Issues**：适合针对性强的解答。提问时请提供完整信息（截图、错误日志、系统环境等）。
@@ -1799,17 +1843,58 @@ MCP Inspector 是官方调试工具，用于测试 MCP 连接：
 
 </div>
 
-## 🪄赞助商
+## 🪄 赞助商
 
-> 302.AI 是一个按用量付费的企业级 AI 资源平台       
-> 提供市场上最新、最全面的 **AI模型** 和 **API**，以及多种开箱即用的在线 AI 应用。
-
+> **302.AI** 是按用量付费的企业级 AI 资源平台      
+> 提供市场上最新、最全面的 **AI 模型**和 **API**，以及多种开箱即用的在线 AI 应用
 
 <div align="center">
 
-<span style="margin-left: 10px"><a href="https://share.302.ai/mEOUzG" target="_blank"><img src="_image/banner-302ai-zh.jpg" alt="302ai banner" width="800"/></a>
-
+<a href="https://share.302.ai/mEOUzG" target="_blank">
+  <img src="_image/banner-302ai-zh.jpg" alt="302.AI" width="800"/>
+</a>
 </div>
+
+### 💰 302.AI 新用户福利
+
+> 领取的 1 美元可用于调用各种 AI 大模型（如 Claude、GPT 等）
+> 本项目 AI 分析功能需配置大模型使用，配置教程详见 [AI智能分析部署](#-ai-智能分析部署)
+
+[![注册领取](https://img.shields.io/badge/注册_302.AI-领取_1_美元免费测试额度-FF6B6B?style=for-the-badge&logo=openai&logoColor=white)](https://share.302.ai/mEOUzG)
+
+<details id="sponsor-tutorial">
+<summary><b>👉 点击展开： 302.AI 使用教程</b></summary>
+
+
+### 第 1 步：获取 API Key
+
+1. 注册后，进入右上角 [管理后台](https://302.ai/dashboard/overview)
+2. 点击左侧 [API Keys](https://302.ai/apis/list)
+3. 在页面下方找到默认 API KEY，**点击眼睛图标查看**，然后复制
+   （⚠️ 注意：不是点最右侧的复制按钮）
+
+
+### 第 2 步：在 Cherry Studio 中配置
+
+1. 打开 Cherry Studio，进入设置
+2. 模型提供商选择 **"302.AI"**
+3. 粘贴刚才复制的 API Key
+4. 点击**管理**，现在可以使用所有支持的 AI 模型了
+
+**提示：** Cherry Studio 已原生集成 302.AI，配置后即可看到完整模型列表。
+
+
+**Q: 1 美元免费额度能用多久？**    
+A: 取决于使用频率和模型选择，可以进行多次测试体验。
+
+**Q: 免费额度用完后怎么办？**    
+A: 可以按需充值，按量付费。目前大厂模型价格已相对亲民。
+
+</details>
+
+<br>
+
+---
 
 
 ### 常见问题
