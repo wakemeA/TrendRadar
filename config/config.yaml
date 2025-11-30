@@ -100,10 +100,6 @@ weight:
 platforms:
   
   # === 综合新闻媒体类 ===
-  - id: "baidu"
-    name: "百度热搜"
-  - id: "ifeng"
-    name: "凤凰网"
   - id: "cankaoxiaoxi"
     name: "参考消息"
   - id: "sputniknewscn"
@@ -144,8 +140,6 @@ platforms:
     name: "贴吧"
   - id: "zhihu"
     name: "知乎"
-  - id: "hupu"
-    name: "虎扑"
 
   # === 科技类平台 ===
   - id: "ithome"
@@ -158,8 +152,6 @@ platforms:
     name: "Hacker News"
   - id: "solidot"
     name: "Solidot"
-  - id: "v2ex"
-    name: "V2EX"
   - id: "nowcoder"
     name: "牛客网"
   - id: "pcbeta"
